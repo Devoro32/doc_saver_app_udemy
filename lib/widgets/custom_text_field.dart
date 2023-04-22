@@ -21,9 +21,11 @@ class CustomTextField extends StatelessWidget {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
-          hintText: hintText,
-          labelText: labelText,
-          prefixIcon: Icon(prefixIconData)),
+        hintText: hintText,
+        labelText: labelText,
+        prefixIcon: Icon(prefixIconData),
+        suffixIcon: suffixIcon,
+      ),
     );
   }
 }

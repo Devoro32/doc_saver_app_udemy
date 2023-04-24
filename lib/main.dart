@@ -1,9 +1,17 @@
+import 'package:doc_saver_app/firebase_options.dart';
 import 'package:doc_saver_app/screens/authentication_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'screens/forget_password_screen.dart';
 
-void main() {
+void main() async {
+  //flutter widgets needs to be initilized before using them
+  WidgetsFlutterBinding.ensureInitialized();
+  //indicate the default system
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

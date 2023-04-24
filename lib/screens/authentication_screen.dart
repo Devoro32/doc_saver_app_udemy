@@ -124,6 +124,18 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                     onPressed: () {
                       if (_key.currentState!.validate()) {
                         //TODO: Authentication code
+
+                        if (provider.isLogin) {
+                          provider.signIn(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          );
+                        } else {
+                          provider.singUp(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          );
+                        }
                       }
                     },
                     title: provider.isLogin ? ' Login' : 'Register',

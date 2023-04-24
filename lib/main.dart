@@ -1,6 +1,8 @@
 import 'package:doc_saver_app/screens/authentication_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'screens/forget_password_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -26,6 +28,8 @@ class MyApp extends StatelessWidget {
       routes: {
         AuthenticationScreen.routeName: (context) =>
             const AuthenticationScreen(),
+        ForgetPasswordScreen.routeName: (context) =>
+            const ForgetPasswordScreen(),
       },
     );
   }

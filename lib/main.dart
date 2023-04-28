@@ -30,6 +30,10 @@ class MyApp extends StatelessWidget {
         title: 'Doc Saver App',
         theme: ThemeData(
             primarySwatch: Colors.blue,
+            textTheme: const TextTheme(
+                headline6: TextStyle(
+              fontWeight: FontWeight.bold,
+            )),
             inputDecorationTheme: const InputDecorationTheme(
                 border: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(

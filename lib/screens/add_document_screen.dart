@@ -67,11 +67,11 @@ class _AddDocumentScreenState extends State<AddDocumentScreen> {
               Consumer<DocumentProvider>(builder: (
                 context,
                 provider,
-                _,
+                child,
               ) {
                 return InkWell(
                   onTap: () {
-                    provider.pickDocument();
+                    provider.pickDocument(context);
                   },
                   child: Container(
                     decoration: BoxDecoration(

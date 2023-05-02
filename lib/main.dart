@@ -1,5 +1,6 @@
 import 'package:doc_saver_app/firebase_options.dart';
 import 'package:doc_saver_app/provider/auth_provider.dart';
+import 'package:doc_saver_app/screens/add_document_screen.dart';
 import 'package:doc_saver_app/screens/authentication_screen.dart';
 import 'package:doc_saver_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
           ForgetPasswordScreen.routeName: (context) =>
               const ForgetPasswordScreen(),
           HomePage.routeName: (context) => const HomePage(),
+          AddDocumentScreen.routeName: (context) => const AddDocumentScreen(),
         },
       ),
     );

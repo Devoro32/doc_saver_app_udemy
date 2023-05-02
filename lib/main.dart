@@ -1,5 +1,6 @@
 import 'package:doc_saver_app/firebase_options.dart';
 import 'package:doc_saver_app/provider/auth_provider.dart';
+import 'package:doc_saver_app/provider/document_provider.dart';
 import 'package:doc_saver_app/screens/add_document_screen.dart';
 import 'package:doc_saver_app/screens/authentication_screen.dart';
 import 'package:doc_saver_app/screens/home_screen.dart';
@@ -24,8 +25,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => AuthProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => DocumentProvider()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Doc Saver App',

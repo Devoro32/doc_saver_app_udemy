@@ -67,7 +67,7 @@ class _AddDocumentScreenState extends State<AddDocumentScreen> {
               Consumer<DocumentProvider>(builder: (
                 context,
                 provider,
-                child,
+                _,
               ) {
                 return InkWell(
                   onTap: () {

@@ -83,7 +83,7 @@ class _AddDocumentScreenState extends State<AddDocumentScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('filename'),
+                        Text(provider.selectedFileName),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

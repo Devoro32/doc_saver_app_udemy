@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:doc_saver_app/helper/size_box_helper.dart';
 import 'package:doc_saver_app/provider/document_provider.dart';
 import 'package:doc_saver_app/widgets/custom_floating_action_button.dart';
@@ -19,10 +17,13 @@ class AddDocumentScreen extends StatefulWidget {
 class _AddDocumentScreenState extends State<AddDocumentScreen> {
   TextEditingController titleController = TextEditingController();
   TextEditingController noteController = TextEditingController();
+
   final _key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final _provider = Provider.of<DocumentProvider>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Document'),
@@ -31,7 +32,12 @@ class _AddDocumentScreenState extends State<AddDocumentScreen> {
       floatingActionButton: CustomFloatingActionButton(
         title: 'Upload',
         iconData: Icons.check,
-        onTap: () {},
+        onTap: () {
+          _provider.sendDocument(
+            title: titleController.text,
+            note: noteController.text,
+          );
+        },
       ),
       body: ScreenBackgroundWidget(
         child: Form(
@@ -64,46 +70,46 @@ class _AddDocumentScreenState extends State<AddDocumentScreen> {
                 labelText: 'Please ent the note',
               ),
               SizeBoxHelper.sizeBox20,
-              Consumer<DocumentProvider>(builder: (
-                context,
-                provider,
-                child,
-              ) {
-                return InkWell(
-                  onTap: () {
-                    provider.pickDocument(context);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: Colors.grey),
-                    ),
-                    height: MediaQuery.of(context).size.height * 0.15,
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(provider.selectedFileName),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.add, size: 30, color: Colors.grey),
-                            Text(
-                              'Upload File',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline5!
-                                  .copyWith(
-                                    color: Colors.grey,
-                                  ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
+              InkWell(
+                onTap: () {
+                  //provider.pickDocument(context);
+                  //using this version rather than the above because we had to
+                  // refresh the entire screen when selecting the document
+                  //the listen will disable the UI refresh
+                  //136
+                  _provider.pickDocument(context);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(color: Colors.grey),
                   ),
-                );
-              }),
+                  height: MediaQuery.of(context).size.height * 0.15,
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Consumer<DocumentProvider>(
+                          builder: (context, provider, child) {
+                        return Text(provider.selectedFileName);
+                      }),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.add, size: 30, color: Colors.grey),
+                          Text(
+                            'Upload File',
+                            style:
+                                Theme.of(context).textTheme.headline5!.copyWith(
+                                      color: Colors.grey,
+                                    ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ),

@@ -52,6 +52,7 @@ class HomePage extends StatelessWidget {
                   subTitle: 'This is the subtitle',
                   dateAdded: '2023-04-29',
                   fileType: 'pdf',
+                  fileUrl: '',
                 ))
               ],
             ),

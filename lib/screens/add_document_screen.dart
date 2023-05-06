@@ -15,9 +15,6 @@ class AddDocumentScreen extends StatefulWidget {
 }
 
 class _AddDocumentScreenState extends State<AddDocumentScreen> {
-  TextEditingController titleController = TextEditingController();
-  TextEditingController noteController = TextEditingController();
-
   final _key = GlobalKey<FormState>();
 
   @override
@@ -29,46 +26,54 @@ class _AddDocumentScreenState extends State<AddDocumentScreen> {
         title: const Text('Add Document'),
         centerTitle: true,
       ),
-      floatingActionButton: CustomFloatingActionButton(
-        title: 'Upload',
-        iconData: Icons.check,
-        onTap: () {
-          _provider.sendDocument(
-            title: titleController.text,
-            note: noteController.text,
-          );
-        },
-      ),
+      floatingActionButton:
+          Consumer<DocumentProvider>(builder: (context, provider, child) {
+        return provider.isFileUploading
+            ? const CircularProgressIndicator()
+            : CustomFloatingActionButton(
+                title: 'Upload',
+                iconData: Icons.check,
+                onTap: () {
+                  _provider.sendDocument(
+                    context: context,
+                  );
+                },
+              );
+      }),
       body: ScreenBackgroundWidget(
         child: Form(
           key: _key,
           child: Column(
             children: [
-              CustomTextField(
-                controller: titleController,
-                hintText: 'Title',
-                prefixIconData: Icons.title,
-                validator: (String? value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter title';
-                  }
-                  return null;
-                },
-                labelText: 'Please enter the title',
-              ),
+              Consumer<DocumentProvider>(builder: (context, provider, child) {
+                return CustomTextField(
+                  controller: provider.titleController,
+                  hintText: 'Title',
+                  prefixIconData: Icons.title,
+                  validator: (String? value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter title';
+                    }
+                    return null;
+                  },
+                  labelText: 'Please enter the title',
+                );
+              }),
               SizeBoxHelper.sizeBox20,
-              CustomTextField(
-                controller: noteController,
-                hintText: 'Note',
-                prefixIconData: Icons.note,
-                validator: (String? value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter note';
-                  }
-                  return null;
-                },
-                labelText: 'Please ent the note',
-              ),
+              Consumer<DocumentProvider>(builder: (context, provider, child) {
+                return CustomTextField(
+                  controller: provider.noteController,
+                  hintText: 'Note',
+                  prefixIconData: Icons.note,
+                  validator: (String? value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter note';
+                    }
+                    return null;
+                  },
+                  labelText: 'Please enter note',
+                );
+              }),
               SizeBoxHelper.sizeBox20,
               InkWell(
                 onTap: () {

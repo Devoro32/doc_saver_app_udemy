@@ -78,8 +78,21 @@ class HomePage extends StatelessWidget {
                           )
                           .toList(),
                     );
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
                   } else {
-                    return const Text('No data');
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/icon_no_file.png',
+                          width: 140,
+                          height: 150,
+                        ),
+                        Text('No data'),
+                      ],
+                    );
                   }
                 }),
           )),

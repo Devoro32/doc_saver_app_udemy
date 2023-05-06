@@ -14,6 +14,7 @@ class FileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(bottom: 10),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           color: Colors.white,
@@ -32,29 +33,37 @@ class FileCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Image.asset(
-                  'assets/images/icon_pdf_type.png',
-                  width: 50,
-                ),
+                fileCardModel.fileType == 'pdf'
+                    ? Image.asset(
+                        'assets/images/icon_pdf_type.png',
+                        width: 50,
+                      )
+                    : Image.asset(
+                        'assets/images/icon_image_type.png',
+                        width: 50,
+                      ),
                 SizeBoxHelper.sizeBox_5,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      fileCardModel.title,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    Text(
-                      fileCardModel.subTitle,
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                    Text(
-                      fileCardModel.dateAdded,
-                      style: Theme.of(context).textTheme.caption!.copyWith(
-                            color: Colors.grey,
-                          ),
-                    ),
-                  ],
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * .45,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        fileCardModel.title,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      Text(
+                        fileCardModel.subTitle,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                      Text(
+                        'Date added: ${fileCardModel.dateAdded.substring(0, 10)}',
+                        style: Theme.of(context).textTheme.caption!.copyWith(
+                              color: Colors.grey,
+                            ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

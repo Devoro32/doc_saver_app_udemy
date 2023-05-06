@@ -72,6 +72,8 @@ class DocumentProvider extends ChangeNotifier {
           .putFile(_file!);
       TaskSnapshot taskSnapshot = await uploadTask;
       String uploadedFileUrl = await taskSnapshot.ref.getDownloadURL();
+      //files_info is the file directory for the realtime database where the below data is stored
+
       await _firebaseDatabase.ref().child('files_info').push().set({
         'title': titleController.text,
         'note': noteController.text,

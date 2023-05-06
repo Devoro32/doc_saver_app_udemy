@@ -7,6 +7,7 @@ import 'package:doc_saver_app/widgets/custom_home_app_bar.dart';
 import 'package:doc_saver_app/widgets/custom_text_field.dart';
 import 'package:doc_saver_app/widgets/file_card.dart';
 import 'package:doc_saver_app/widgets/screen_background.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -44,18 +45,43 @@ class HomePage extends StatelessWidget {
           //   ],
           // ),
           body: ScreenBackgroundWidget(
-            child: ListView(
-              children: [
-                FileCard(
-                    fileCardModel: FileCardModel(
-                  title: 'This is the title',
-                  subTitle: 'This is the subtitle',
-                  dateAdded: '2023-04-29',
-                  fileType: 'pdf',
-                  fileUrl: '',
-                ))
-              ],
-            ),
+            child: StreamBuilder<DatabaseEvent>(
+                stream:
+                    FirebaseDatabase.instance.ref().child('files_info').onValue,
+                builder: (context, snapshot) {
+                  List<FileCardModel> _list = [];
+
+                  if (snapshot.hasData &&
+                      snapshot.data!.snapshot.value != null) {
+                    print('Snapshot: ${snapshot.data!}');
+                    print('Snapshot data: ${snapshot.data!.snapshot.value}');
+                    (snapshot.data!.snapshot.value as Map<dynamic, dynamic>)
+                        .forEach((key, value) {
+                      print('Key:  ${key}');
+                      print('Value: ${value}');
+                      //using the factory in the document_provider to make the list builder easier
+                      _list.add(FileCardModel.fromJson(value));
+                    });
+                    return ListView(
+                      children: _list
+                          .map(
+                            (e) => FileCard(
+                              fileCardModel: FileCardModel(
+                                title: e.title,
+                                subTitle: e.subTitle,
+                                dateAdded: e.dateAdded,
+                                fileUrl: e.fileUrl,
+                                fileType: e.fileType,
+                                fileName: e.fileName,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    );
+                  } else {
+                    return const Text('No data');
+                  }
+                }),
           )),
     );
   }

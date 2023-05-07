@@ -3,7 +3,10 @@ import 'package:doc_saver_app/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomHomeAppBar({super.key});
+  final TextEditingController controller;
+  final VoidCallback onSearch;
+  const CustomHomeAppBar(
+      {super.key, required this.controller, required this.onSearch});
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +38,14 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 SizeBoxHelper.sizeBox20,
                 CustomTextField(
-                  controller: TextEditingController(),
+                  controller: controller,
                   hintText: 'Enter the title of the document',
                   prefixIconData: Icons.search,
                   validator: (value) {
                     return null;
                   },
                   suffixIcon: IconButton(
-                    onPressed: () {},
+                    onPressed: onSearch,
                     icon: const Text('Go'),
                   ),
                 ),

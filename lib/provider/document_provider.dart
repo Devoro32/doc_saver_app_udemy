@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:doc_saver_app/helper/snack_bar_helper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -60,6 +61,9 @@ class DocumentProvider extends ChangeNotifier {
     _file = null;
   }
 
+  String userId = FirebaseAuth.instance.currentUser!.uid;
+
+//adding the information to firebase realtime storage database
   sendDocument({
     required BuildContext context,
   }) async {
@@ -74,7 +78,8 @@ class DocumentProvider extends ChangeNotifier {
       String uploadedFileUrl = await taskSnapshot.ref.getDownloadURL();
       //files_info is the file directory for the realtime database where the below data is stored
 
-      await _firebaseDatabase.ref().child('files_info').push().set({
+      //147- add the user Id so we can filter the result out by the user
+      await _firebaseDatabase.ref().child('files_info/$userId').push().set({
         'title': titleController.text,
         'note': noteController.text,
         'fileURL': uploadedFileUrl,

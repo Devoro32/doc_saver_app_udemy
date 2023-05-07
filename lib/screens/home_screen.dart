@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:doc_saver_app/helper/size_box_helper.dart';
 import 'package:doc_saver_app/models/file_card_model.dart';
 import 'package:doc_saver_app/provider/auth_provider.dart';
@@ -7,13 +9,51 @@ import 'package:doc_saver_app/widgets/custom_home_app_bar.dart';
 import 'package:doc_saver_app/widgets/custom_text_field.dart';
 import 'package:doc_saver_app/widgets/file_card.dart';
 import 'package:doc_saver_app/widgets/screen_background.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static String routeName = '/HomeScreen';
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  TextEditingController searchController = TextEditingController();
+
+  StreamController<DatabaseEvent> streamController = StreamController();
+//searching through the database
+
+//getting the userid 147
+  String userId = FirebaseAuth.instance.currentUser!.uid;
+  setStream() {
+    FirebaseDatabase.instance
+        .ref()
+        //search in the title field for matching words
+        .child('files_info/$userId')
+        .orderByChild('title')
+        .startAt(searchController.text)
+        .endAt('${searchController.text}' '\uf8ff')
+        .onValue
+        .listen((event) {
+      //updating the UI without using the setState ()
+      //created the stream controller so we can use the .add()
+      //this allow for realtime adding of the event to the database
+      print('stream event: ${event}');
+      streamController.add(event);
+    });
+  }
+
+//this will be called before the build method of the screen
+  @override
+  void initState() {
+    setStream();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,27 +67,15 @@ class HomePage extends StatelessWidget {
               Navigator.pushNamed(context, AddDocumentScreen.routeName);
             },
           ),
-          appBar: const CustomHomeAppBar(),
-
-          // appBar: AppBar(
-          //   title: const Text('Home Page'),
-          //   actions: [
-          //     Consumer<AuthProvider>(builder: (context, provider, child) {
-          //       return provider.isLoadingLogout
-          //           ? const CircularProgressIndicator()
-          //           : IconButton(
-          //               onPressed: () {
-          //                 provider.logOut(context);
-          //               },
-          //               icon: const Icon(Icons.logout),
-          //             );
-          //     })
-          //   ],
-          // ),
+          appBar: CustomHomeAppBar(
+            controller: searchController,
+            onSearch: () {
+              setStream();
+            },
+          ),
           body: ScreenBackgroundWidget(
             child: StreamBuilder<DatabaseEvent>(
-                stream:
-                    FirebaseDatabase.instance.ref().child('files_info').onValue,
+                stream: streamController.stream,
                 builder: (context, snapshot) {
                   List<FileCardModel> _list = [];
 

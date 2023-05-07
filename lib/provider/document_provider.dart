@@ -71,7 +71,7 @@ class DocumentProvider extends ChangeNotifier {
       setIsFileUploading(true);
       UploadTask uploadTask = _firebaseStorage
           .ref()
-          .child('files')
+          .child('files/$userId')
           .child(_selectedFileName)
           .putFile(_file!);
       TaskSnapshot taskSnapshot = await uploadTask;
@@ -96,6 +96,29 @@ class DocumentProvider extends ChangeNotifier {
     } catch (error) {
       SnackBarHelper.showErrorSnackbar(context, error.toString());
       setIsFileUploading(false);
+    }
+  }
+
+  Future<void> deleteDocument(
+      BuildContext context, String id, String fileName) async {
+    //firebase storage database
+    try {
+      await _firebaseStorage.ref().child('files/$userId/$fileName').delete();
+      print(' files deleted ${userId}/${fileName}');
+
+      //firebase realtime database
+      await _firebaseDatabase
+          .ref()
+          .child('files_info/$userId/$id')
+          .remove()
+          .then((value) {
+        SnackBarHelper.showSuccessSnackbar(
+            context, '$fileName successfully deleted');
+      });
+    } on FirebaseException catch (firebaseError) {
+      SnackBarHelper.showErrorSnackbar(context, firebaseError.message!);
+    } catch (error) {
+      SnackBarHelper.showErrorSnackbar(context, error.toString());
     }
   }
 }

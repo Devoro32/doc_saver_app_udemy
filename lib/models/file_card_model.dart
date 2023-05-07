@@ -5,6 +5,7 @@ class FileCardModel {
   final String fileType;
   final String fileUrl;
   final String fileName;
+  final String id;
 
   FileCardModel({
     required this.title,
@@ -13,12 +14,15 @@ class FileCardModel {
     required this.fileUrl,
     required this.fileType,
     required this.fileName,
+    required this.id,
   });
 
 //create a factory contructor that will automatically take the values from the database
 //and place them into a list view
-  factory FileCardModel.fromJson(Map<dynamic, dynamic> json) {
+  factory FileCardModel.fromJson(Map<dynamic, dynamic> json, String id) {
     return FileCardModel(
+      //the id is not part of the map json hence the need to add it separately-148
+      id: id,
       title: json['title'].toString(),
       subTitle: json['note'].toString(),
       dateAdded: json['dateAdded'].toString(),

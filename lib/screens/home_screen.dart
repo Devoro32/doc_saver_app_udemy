@@ -88,13 +88,14 @@ class _HomePageState extends State<HomePage> {
                       print('Key:  ${key}');
                       print('Value: ${value}');
                       //using the factory in the document_provider to make the list builder easier
-                      _list.add(FileCardModel.fromJson(value));
+                      _list.add(FileCardModel.fromJson(value, key));
                     });
                     return ListView(
                       children: _list
                           .map(
                             (e) => FileCard(
                               fileCardModel: FileCardModel(
+                                id: e.id,
                                 title: e.title,
                                 subTitle: e.subTitle,
                                 dateAdded: e.dateAdded,

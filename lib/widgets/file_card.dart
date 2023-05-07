@@ -1,8 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+
+import 'package:doc_saver_app/provider/document_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:doc_saver_app/helper/size_box_helper.dart';
 import 'package:doc_saver_app/models/file_card_model.dart';
+import 'package:provider/provider.dart';
 
 class FileCard extends StatelessWidget {
   final FileCardModel fileCardModel;
@@ -70,7 +74,52 @@ class FileCard extends StatelessWidget {
             Row(
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            backgroundColor: Colors.red,
+                            title: const Text(
+                              'Delete',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            content: Text(
+                              fileCardModel.title,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  'Cancel',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Provider.of<DocumentProvider>(context,
+                                          listen: false)
+                                      .deleteDocument(
+                                    context,
+                                    fileCardModel.id,
+                                    fileCardModel.fileName,
+                                  )
+                                      .then((value) {
+                                    Navigator.pop(context);
+                                  });
+                                },
+                                child: const Text(
+                                  'Okay',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ],
+                          );
+                        });
+                  },
                   icon: const Icon(
                     Icons.delete,
                     color: Colors.red,

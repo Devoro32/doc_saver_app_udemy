@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:doc_saver_app/provider/document_provider.dart';
+import 'package:doc_saver_app/screens/document_view_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:doc_saver_app/helper/size_box_helper.dart';
@@ -126,7 +127,15 @@ class FileCard extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                      DocumentViewScreen.routeName,
+                      arguments: DocumentViewScreenArgs(
+                        fileName: fileCardModel.fileName,
+                        fileUrl: fileCardModel.fileUrl,
+                      ),
+                    );
+                  },
                   child: Text(
                     'View',
                     style: Theme.of(context)

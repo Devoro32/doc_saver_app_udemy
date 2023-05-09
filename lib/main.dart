@@ -5,6 +5,7 @@ import 'package:doc_saver_app/screens/add_document_screen.dart';
 import 'package:doc_saver_app/screens/authentication_screen.dart';
 import 'package:doc_saver_app/screens/document_view_screen.dart';
 import 'package:doc_saver_app/screens/home_screen.dart';
+import 'package:doc_saver_app/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
           HomePage.routeName: (context) => const HomePage(),
           AddDocumentScreen.routeName: (context) => const AddDocumentScreen(),
           DocumentViewScreen.routeName: (context) => const DocumentViewScreen(),
+          SettingsScreen.routeName: (context) => const SettingsScreen(),
         },
       ),
     );

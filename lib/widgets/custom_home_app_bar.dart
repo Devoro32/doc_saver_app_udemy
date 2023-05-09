@@ -1,4 +1,5 @@
 import 'package:doc_saver_app/helper/size_box_helper.dart';
+import 'package:doc_saver_app/screens/settings_screen.dart';
 import 'package:doc_saver_app/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,10 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                       width: 150,
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, SettingsScreen.routeName);
+                        //  Navigator.of(context).pushNamed(SettingsScreen.routeName);
+                      },
                       icon: const Icon(Icons.settings),
                       color: Colors.white,
                     )

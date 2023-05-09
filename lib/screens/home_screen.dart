@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                         .forEach((key, value) {
                       print('Key:  ${key}');
                       print('Value: ${value}');
-                      print('FILEURL: ${value["fileURL"]}');
+                      print('FileURL: ${value["fileUrl"]}');
 
                       //using the factory in the document_provider to make the list builder easier
                       _list.add(FileCardModel.fromJson(value, key));

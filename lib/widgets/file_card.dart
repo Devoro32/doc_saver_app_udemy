@@ -133,6 +133,7 @@ class FileCard extends StatelessWidget {
                       arguments: DocumentViewScreenArgs(
                         fileName: fileCardModel.fileName,
                         fileUrl: fileCardModel.fileUrl,
+                        fileType: fileCardModel.fileType,
                       ),
                     );
                   },

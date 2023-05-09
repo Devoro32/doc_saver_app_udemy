@@ -82,7 +82,7 @@ class DocumentProvider extends ChangeNotifier {
       await _firebaseDatabase.ref().child('files_info/$userId').push().set({
         'title': titleController.text,
         'note': noteController.text,
-        'fileURL': uploadedFileUrl,
+        'fileUrl': uploadedFileUrl,
         'dateAdded': DateTime.now().toString(),
         'fileName': _selectedFileName,
         //split the file name  by '.' and taking the last section

@@ -138,6 +138,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                 context,
                                 email: emailController.text,
                                 password: passwordController.text,
+                                username: usernameController.text,
                               );
                             }
                           }

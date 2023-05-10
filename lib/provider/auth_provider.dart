@@ -1,12 +1,14 @@
 import 'package:doc_saver_app/helper/snack_bar_helper.dart';
 import 'package:doc_saver_app/screens/authentication_screen.dart';
 import 'package:doc_saver_app/screens/home_screen.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthProvider extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
 
   bool _islogin = true;
   bool get isLogin => _islogin;
@@ -36,6 +38,7 @@ class AuthProvider extends ChangeNotifier {
     BuildContext context, {
     required String email,
     required String password,
+    required String username,
   }) async {
     try {
       setIsLoading(true);
@@ -44,8 +47,14 @@ class AuthProvider extends ChangeNotifier {
         email: email,
         password: password,
       )
-          .then((value) {
+          .then((value) async {
+        //151 setting the username
+        await _firebaseDatabase
+            .ref()
+            .child('user_info/${value.user!.uid}')
+            .set({'username': username});
         setIsLoading(false);
+
         SnackBarHelper.showSuccessSnackbar(context, 'Successfully register');
         Navigator.of(context).pushNamed(HomePage.routeName);
         return value;

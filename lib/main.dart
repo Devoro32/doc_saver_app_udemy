@@ -1,6 +1,7 @@
 import 'package:doc_saver_app/firebase_options.dart';
 import 'package:doc_saver_app/provider/auth_provider.dart';
 import 'package:doc_saver_app/provider/document_provider.dart';
+import 'package:doc_saver_app/provider/user_info_provider.dart';
 import 'package:doc_saver_app/screens/add_document_screen.dart';
 import 'package:doc_saver_app/screens/authentication_screen.dart';
 import 'package:doc_saver_app/screens/document_view_screen.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => DocumentProvider()),
+        ChangeNotifierProvider(create: (_) => UserInfoProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

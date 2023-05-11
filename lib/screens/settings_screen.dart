@@ -83,13 +83,14 @@ class SettingsScreen extends StatelessWidget {
               title: 'Logout',
               leadingIcon: Icons.logout,
               trailing: IconButton(
-                  onPressed: () {
-                    Provider.of<AuthProvider>(context, listen: false)
-                        .logOut(context);
-                  },
-                  icon: const Icon(
-                    Icons.logout,
-                  )),
+                onPressed: () {
+                  Provider.of<AuthProvider>(context, listen: false)
+                      .logOut(context);
+                },
+                icon: const Icon(
+                  Icons.logout,
+                ),
+              ),
             )
           ],
         ),

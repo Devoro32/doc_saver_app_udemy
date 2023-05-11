@@ -34,6 +34,7 @@ class _AddDocumentScreenState extends State<AddDocumentScreen> {
                 title: 'Upload',
                 iconData: Icons.check,
                 onTap: () {
+                  FocusScope.of(context).unfocus();
                   _provider.sendDocument(
                     context: context,
                   );
@@ -77,6 +78,7 @@ class _AddDocumentScreenState extends State<AddDocumentScreen> {
               SizeBoxHelper.sizeBox20,
               InkWell(
                 onTap: () {
+                  FocusScope.of(context).unfocus();
                   //provider.pickDocument(context);
                   //using this version rather than the above because we had to
                   // refresh the entire screen when selecting the document

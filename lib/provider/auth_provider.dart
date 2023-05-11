@@ -56,7 +56,7 @@ class AuthProvider extends ChangeNotifier {
         setIsLoading(false);
 
         SnackBarHelper.showSuccessSnackbar(context, 'Successfully register');
-        Navigator.of(context).pushNamed(HomePage.routeName);
+        Navigator.of(context).pushReplacementNamed(HomePage.routeName);
         return value;
       });
     } on FirebaseAuthException catch (firebaseError) {
@@ -83,7 +83,7 @@ class AuthProvider extends ChangeNotifier {
           .then((value) {
         setIsLoading(false);
         SnackBarHelper.showSuccessSnackbar(context, 'Login success');
-        Navigator.of(context).pushNamed(HomePage.routeName);
+        Navigator.of(context).pushReplacementNamed(HomePage.routeName);
         return value;
       });
     } on FirebaseAuthException catch (firebaseError) {
@@ -133,7 +133,12 @@ class AuthProvider extends ChangeNotifier {
       await _firebaseAuth.signOut().then((value) {
         setIsLoadingLogout(false);
         SnackBarHelper.showSuccessSnackbar(context, 'Successfully logged out');
-        Navigator.of(context).pushNamed(AuthenticationScreen.routeName);
+        //when user log out it will remove all pages until you get to the first page
+
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        //first route is set at the homescreen route
+        Navigator.of(context)
+            .pushReplacementNamed(AuthenticationScreen.routeName);
         return value;
       });
     } on FirebaseAuthException catch (firebaseError) {

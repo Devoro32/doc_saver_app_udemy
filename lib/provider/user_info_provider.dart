@@ -7,7 +7,8 @@ class UserInfoProvider extends ChangeNotifier {
   String get userName => _userName;
 
   final FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
-  User? user = FirebaseAuth.instance.currentUser;
+  //change to getter so the user does not modify it within the setting screen
+  User? get user => FirebaseAuth.instance.currentUser;
   //String userId = FirebaseAuth.instance.currentUser!.uid;
   getUserName() async {
     //two methods to get data from the database 1 stream 2. get method

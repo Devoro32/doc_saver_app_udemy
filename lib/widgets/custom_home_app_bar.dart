@@ -32,6 +32,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                     IconButton(
                       onPressed: () {
+                        FocusScope.of(context).unfocus();
                         Navigator.pushNamed(context, SettingsScreen.routeName);
                         //  Navigator.of(context).pushNamed(SettingsScreen.routeName);
                       },

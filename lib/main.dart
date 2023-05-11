@@ -12,6 +12,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/forget_password_screen.dart';
+import 'screens/splash_screen.dart';
 
 void main() async {
   //flutter widgets needs to be initilized before using them
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
                   color: Colors.blue,
                   width: 2,
                 )))),
-        initialRoute: AuthenticationScreen.routeName,
+        initialRoute: SplashScreen.routeName,
         routes: {
           AuthenticationScreen.routeName: (context) =>
               const AuthenticationScreen(),
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
           AddDocumentScreen.routeName: (context) => const AddDocumentScreen(),
           DocumentViewScreen.routeName: (context) => const DocumentViewScreen(),
           SettingsScreen.routeName: (context) => const SettingsScreen(),
+          SplashScreen.routeName: (context) => const SplashScreen(),
         },
       ),
     );
